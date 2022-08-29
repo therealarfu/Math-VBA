@@ -1,6 +1,6 @@
 Attribute VB_Name = "Math"
 Option Explicit
-'Módulo Math feito por arfur
+'Math module by arfu
 Public Const PI As Double = 3.14159265359
 Public Const E As Double = 2.71828182846
 Public Const PI2 As Double = PI / 2
