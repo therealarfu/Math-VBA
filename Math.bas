@@ -1,6 +1,6 @@
 Attribute VB_Name = "Math"
 Option Explicit
-'Módulo Math feito por arfur
+'Math module by arfu
 Public Const PI As Double = 3.14159265359, E As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2
 Public Function IsPrime(ByVal X#) As Boolean
     Dim c#, i%
@@ -12,12 +12,23 @@ End Function
 Public Function isDivisible(ByVal X#, Optional ByVal Y# = 2) As Boolean
     isDivisible = X Mod Y = 0
 End Function
+Function Evaluate(ByVal String1 As String) As Double
+    On Error Resume Next
+    Dim Excel As Object: Set Excel = CreateObject("Excel.Application")
+    Evaluate = Excel.Evaluate(String1)
+End Function
 Public Function Pow(ByVal X#, Optional ByVal Y# = 2) As Double
     Pow = (X ^ Y)
 End Function
 Public Function Root(ByVal X#, Optional ByVal Y As Double = 2) As Double
     On Error Resume Next
     Root = X ^ (1 / Y)
+End Function
+Public Function Random() As Double
+    Random = 1 * rnd + 0
+End Function
+Public Function RandNum(Optional ByVal Min As Single = 0, Optional ByVal Max As Single = 1, Optional ByVal Float As Integer = 0) As Double
+    RandNum = Round(Max * rnd + Min, Float)
 End Function
 Public Function Ceil(ByVal X#) As Long
     Ceil = IIf(Round(X, 0) >= X, Round(X, 0), Round(X, 0) + 1)
