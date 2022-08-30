@@ -1,10 +1,7 @@
 Attribute VB_Name = "Math"
 Option Explicit
-'Math module by arfu
-Public Const PI As Double = 3.14159265359
-Public Const E As Double = 2.71828182846
-Public Const PI2 As Double = PI / 2
-Public Const TAU As Double = PI * 2
+'Módulo Math feito por arfur
+Public Const PI As Double = 3.14159265359, E As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2
 Public Function IsPrime(ByVal X#) As Boolean
     Dim c#, i%
     IsPrime = True
@@ -18,9 +15,9 @@ End Function
 Public Function Pow(ByVal X#, Optional ByVal Y# = 2) As Double
     Pow = (X ^ Y)
 End Function
-Public Function Sqrt(ByVal X#, Optional ByVal Y As Double = 2) As Double
+Public Function Root(ByVal X#, Optional ByVal Y As Double = 2) As Double
     On Error Resume Next
-    Sqrt = X ^ (1 / Y)
+    Root = X ^ (1 / Y)
 End Function
 Public Function Ceil(ByVal X#) As Long
     Ceil = IIf(Round(X, 0) >= X, Round(X, 0), Round(X, 0) + 1)
@@ -37,7 +34,7 @@ End Function
 Public Function Bhask(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0, Optional ByVal X As Boolean) As Double
     Dim D As Double: D = b ^ 2 - 4 * a * c
     If D < 0 Then Exit Function
-    Bhask = IIf(X, (-b + Sqrt(D)) / (2 * a), (-b - Sqrt(D)) / (2 * a))
+    Bhask = IIf(X, (-b + Root(D)) / (2 * a), (-b - Root(D)) / (2 * a))
 End Function
 Public Function Min(ParamArray X() As Variant) As Double
     Dim i%
@@ -72,19 +69,19 @@ Public Function YMid(ByVal Y1#, ByVal Y2#) As Double
     YMid = (Y1 + Y2) / 2
 End Function
 Public Function Distance(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#) As Double
-    Distance = Sqrt((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2)
+    Distance = Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2)
 End Function
 Public Function Distance2(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#, ByVal Z1#, ByVal Z2#) As Double
-    Distance2 = Sqrt((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2)
+    Distance2 = Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2)
 End Function
 Public Function Hypot(ByVal X#, ByVal Y#) As Double
-    Hypot = Sqrt(X ^ 2 + Y ^ 2)
+    Hypot = Root(X ^ 2 + Y ^ 2)
 End Function
 Public Function LogN(ByVal X#, ByVal Y#) As Double
     LogN = Log(X) / Log(Y)
 End Function
 Public Function CosLaw(ByVal b#, ByVal c#, ByVal Angle#) As Double
-    CosLaw = Sqrt(b ^ 2 + c ^ 2 - 2 * b * c * Cos(Degrees(Angle)))
+    CosLaw = Root(b ^ 2 + c ^ 2 - 2 * b * c * Cos(Degrees(Angle)))
 End Function
 Public Function ATan2(ByVal X#, ByVal Y#) As Double
     ATan2 = IIf(X > 0, Atn(Y / X), IIf(X < 0, Atn(Y / X) + PI * Sgn(Y) + IIf(Y = 0, PI, 0), PI2 * Sgn(Y)))
@@ -105,16 +102,16 @@ Public Function Degrees(ByVal X#) As Double
     Degrees = X * PI / 180
 End Function
 Public Function ASin(ByVal X#) As Double
-    ASin = Atn(X / Sqrt(-X * X + 1))
+    ASin = Atn(X / Root(-X * X + 1))
 End Function
 Public Function ACos(ByVal X#) As Double
-    ACos = Atn(-X / Sqrt(-X * X + 1)) + 2 * Atn(1)
+    ACos = Atn(-X / Root(-X * X + 1)) + 2 * Atn(1)
 End Function
 Public Function ASec(ByVal X#) As Double
-    ASec = Atn(X / Sqrt(X * X - 1)) + Sgn((X) - 1) * (2 * Atn(1))
+    ASec = Atn(X / Root(X * X - 1)) + Sgn((X) - 1) * (2 * Atn(1))
 End Function
 Public Function ACosec(ByVal X#) As Double
-    ACosec = Atn(X / Sqrt(X * X - 1)) + (Sgn(X) - 1) * (2 * Atn(1))
+    ACosec = Atn(X / Root(X * X - 1)) + (Sgn(X) - 1) * (2 * Atn(1))
 End Function
 Public Function ACotan(ByVal X#) As Double
     ACotan = Atn(X) + 2 * Atn(1)
@@ -138,19 +135,19 @@ Public Function HCotan(ByVal X#) As Double
     HCotan = (Exp(X) + Exp(-X)) / (Exp(X) - Exp(-X))
 End Function
 Public Function HASin(ByVal X#) As Double
-    HASin = Log(X + Sqrt(X * X + 1))
+    HASin = Log(X + Root(X * X + 1))
 End Function
 Public Function HACos(ByVal X#) As Double
-    HACos = Log(X + Sqrt(X * X - 1))
+    HACos = Log(X + Root(X * X - 1))
 End Function
 Public Function HATan(ByVal X#) As Double
     HATan = Log((1 + X) / (1 - X)) / 2
 End Function
 Public Function HASec(ByVal X#) As Double
-    HASec = Log((Sqrt(-X * X + 1) + 1) / X)
+    HASec = Log((Root(-X * X + 1) + 1) / X)
 End Function
 Public Function HACosec(ByVal X#) As Double
-    HACosec = Log((Sgn(X) * Sqrt(X * X + 1) + 1) / X)
+    HACosec = Log((Sgn(X) * Root(X * X + 1) + 1) / X)
 End Function
 Public Function HACotan(ByVal X#) As Double
     HACotan = Log((X + 1) / (X - 1)) / 2
