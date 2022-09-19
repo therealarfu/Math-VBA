@@ -18,18 +18,24 @@ Function Evaluate(ByVal String1 As String) As Double
     Evaluate = Excel.Evaluate(String1)
 End Function
 Public Function Pow(ByVal X#, Optional ByVal Y# = 2) As Double
+    On Error Resume Next
     Pow = (X ^ Y)
 End Function
 Public Function Root(ByVal X#, Optional ByVal Y As Double = 2) As Double
     On Error Resume Next
     Root = X ^ (1 / Y)
 End Function
-Public Function Random() As Double
-    Random = 1 * rnd + 0
+
+'VBUtilis by PPTGames (modified)
+Public Function RandNum(Optional ByVal Minimum As Single, Optional ByVal Maximum As Single = 1, Optional ByVal Float As Single = 7, Optional RandomizeNumber As Variant) As Single
+    If IsMissing(RandomizeNumber) Then
+        Randomize
+    Else
+        Randomize RandomizeNumber
+    End If
+    RandNum = Round((Maximum - Minimum) * Rnd + Minimum, 7)
 End Function
-Public Function RandNum(Optional ByVal Min As Single = 0, Optional ByVal Max As Single = 1, Optional ByVal Float As Integer = 0) As Double
-    RandNum = Round(Max * rnd + Min, Float)
-End Function
+
 Public Function Ceil(ByVal X#) As Long
     Ceil = IIf(Round(X, 0) >= X, Round(X, 0), Round(X, 0) + 1)
 End Function
@@ -59,12 +65,37 @@ Public Function Max(ParamArray X() As Variant) As Double
         If i = 0 Or X(i) > Max Then Max = X(i)
     Next
 End Function
-Public Function Factorial(X As Long) As LongLong
-    Dim i As Long
-    Factorial = 1
-    For i = 1 To X
-        Factorial = Factorial * i
+Public Function Fact(X As Long) As LongLong
+    Fact = 1
+    For X = X To 1 Step -1
+        Fact = Fact * X
     Next
+End Function
+Public Function SemiFact(X As Long) As LongLong
+    SemiFact = 1
+    For X = X To 1 Step -2
+        SemiFact = SemiFact * X
+    Next
+End Function
+Public Function Fibonacci(Quant As Integer, Optional Sequence As Boolean = True)
+    Dim n2 As Long, n1 As Long, handler As String, i As Integer, c As Long
+    n1 = 0
+    n2 = 1
+    c = 0
+    If Quant <= 0 Then
+        Exit Function
+    ElseIf Quant = 1 Then
+        Fibonacci = 0
+    Else
+        Do While i < Quant
+            handler = handler & n1 & " "
+            c = n1 + n2
+            n1 = n2
+            n2 = c
+            i = i + 1
+        Loop
+        Fibonacci = IIf(Sequence, Split(handler, " "), Split(handler, " ")(UBound(Split(handler, " ")) - 1))
+    End If
 End Function
 Public Function Mean(ParamArray X() As Variant) As Double
     Dim i%
@@ -79,20 +110,17 @@ End Function
 Public Function YMid(ByVal Y1#, ByVal Y2#) As Double
     YMid = (Y1 + Y2) / 2
 End Function
-Public Function Distance(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#) As Double
-    Distance = Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2)
+Public Function Distance(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#, Optional ByVal Sqrt As Boolean = True) As Double
+    Distance = IIf(Sqrt, Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2), (X2 - X1) ^ 2 + (Y2 - Y1) ^ 2)
 End Function
-Public Function Distance2(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#, ByVal Z1#, ByVal Z2#) As Double
-    Distance2 = Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2)
+Public Function Distance2(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#, ByVal Z1#, ByVal Z2#, Optional ByVal Sqrt As Boolean = True) As Double
+    Distance2 = IIf(Sqrt, Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2), (X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2)
 End Function
 Public Function Hypot(ByVal X#, ByVal Y#) As Double
     Hypot = Root(X ^ 2 + Y ^ 2)
 End Function
 Public Function LogN(ByVal X#, ByVal Y#) As Double
     LogN = Log(X) / Log(Y)
-End Function
-Public Function CosLaw(ByVal b#, ByVal c#, ByVal Angle#) As Double
-    CosLaw = Root(b ^ 2 + c ^ 2 - 2 * b * c * Cos(Degrees(Angle)))
 End Function
 Public Function ATan2(ByVal X#, ByVal Y#) As Double
     ATan2 = IIf(X > 0, Atn(Y / X), IIf(X < 0, Atn(Y / X) + PI * Sgn(Y) + IIf(Y = 0, PI, 0), PI2 * Sgn(Y)))
