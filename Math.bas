@@ -1,7 +1,9 @@
 Attribute VB_Name = "Math"
+Attribute VB_Name = "Math"
 Option Explicit
 'Math module by arfu
-Public Const PI As Double = 3.14159265359, E As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2
+Public Const PI As Double = 3.14159265359, e As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2, GRatio As Double = 1.61803398875
+
 Public Function IsPrime(ByVal X#) As Boolean
     Dim c#, i%
     IsPrime = True
@@ -25,7 +27,6 @@ Public Function Root(ByVal X#, Optional ByVal Y As Double = 2) As Double
     On Error Resume Next
     Root = X ^ (1 / Y)
 End Function
-
 'VBUtilis by PPTGames (modified)
 Public Function RandNum(Optional ByVal Minimum As Single, Optional ByVal Maximum As Single = 1, Optional ByVal Float As Single = 7, Optional RandomizeNumber As Variant) As Single
     If IsMissing(RandomizeNumber) Then
@@ -35,7 +36,6 @@ Public Function RandNum(Optional ByVal Minimum As Single, Optional ByVal Maximum
     End If
     RandNum = Round((Maximum - Minimum) * Rnd + Minimum, 7)
 End Function
-
 Public Function Ceil(ByVal X#) As Long
     Ceil = IIf(Round(X, 0) >= X, Round(X, 0), Round(X, 0) + 1)
 End Function
@@ -45,8 +45,8 @@ End Function
 Public Function Floor(ByVal X#) As Long
     Floor = IIf(Round(X, 0) <= X, Round(X, 0), Round(X, 0) - 1)
 End Function
-Public Function Delta(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0) As Double
-    Delta = b ^ 2 - 4 * a * c
+Public Function Delta(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0, Optional ByVal Root As Boolean = False) As Double
+    Delta = IIf(Root, Sgn(b ^ 2 - 4 * a * c), b ^ 2 - 4 * a * c)
 End Function
 Public Function Bhask(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0, Optional ByVal X As Boolean) As Double
     Dim D As Double: D = b ^ 2 - 4 * a * c
