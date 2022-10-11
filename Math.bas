@@ -1,5 +1,4 @@
 Attribute VB_Name = "Math"
-Attribute VB_Name = "Math"
 Option Explicit
 'Math module by arfu
 Public Const PI As Double = 3.14159265359, e As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2, GRatio As Double = 1.61803398875
