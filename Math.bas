@@ -89,8 +89,8 @@ End Function
 
 Public Function GCD(ByVal a As Long, ByVal b As Long) As Long
     Dim remainder As Long
-    If a < 0 Then a = -a
-    If b < 0 Then b = -b
+    a = Abs(a)
+    b = Abs(b)
     If a = 0 Or b = 0 Then Exit Function
     Do
       remainder = a Mod b
@@ -102,37 +102,29 @@ End Function
 
 
 Public Function LCM(ByVal a As Long, ByVal b As Long) As Long
-    If a < 0 Then a = -a
-    If b < 0 Then b = -b
+    a = Abs(a)
+    b = Abs(b)
     If a = 0 Or b = 0 Then Exit Function
     
     LCM = (a * b) \ GCD(a, b)
 End Function
 
 
-Public Function Fact(ByVal x As Long) As LongLong
+Public Function Fact(ByVal N As Long, Optional ByVal StepValue As Long = 1) As LongLong
     Fact = 1
-    For x = x To 1 Step -1
-        Fact = Fact * x
+    For N = N To 1 Step -Abs(StepValue)
+        Fact = Fact * N
     Next
 End Function
 
 
-Public Function SemiFact(ByVal x As Long) As LongLong
-    SemiFact = 1
-    For x = x To 1 Step -2
-        SemiFact = SemiFact * x
-    Next
-End Function
-
-
-Public Function Fibonacci(ByVal n As Long) As Long
-    If n <= 0 Then
+Public Function Fibonacci(ByVal N As Long) As Long
+    If N <= 0 Then
       Fibonacci = 0
-    ElseIf n = 1 Then
+    ElseIf N = 1 Then
       Fibonacci = 1
     Else
-      Fibonacci = Fibonacci(n - 1) + Fibonacci(n - 2)
+      Fibonacci = Fibonacci(N - 1) + Fibonacci(N - 2)
     End If
 End Function
 
