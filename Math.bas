@@ -110,7 +110,7 @@ Public Function LCM(ByVal a As Long, ByVal b As Long) As Long
 End Function
 
 
-Public Function Fact(ByVal N As Long, Optional ByVal StepValue As Long = 1) As LongLong
+Public Function Fact(ByVal N As Long, Optional ByVal StepValue As Long = 1) As LongPtr
     Fact = 1
     For N = N To 1 Step -Abs(StepValue)
         Fact = Fact * N
@@ -118,14 +118,9 @@ Public Function Fact(ByVal N As Long, Optional ByVal StepValue As Long = 1) As L
 End Function
 
 
-Public Function Fibonacci(ByVal N As Long) As Long
-    If N <= 0 Then
-      Fibonacci = 0
-    ElseIf N = 1 Then
-      Fibonacci = 1
-    Else
-      Fibonacci = Fibonacci(N - 1) + Fibonacci(N - 2)
-    End If
+Public Function Fibonacci(ByVal N As Long) As LongPtr
+    If N <= 0 Then Exit Function
+    Fibonacci = IIf(N = 1, 1, Fibonacci(N - 1) + Fibonacci(N - 2))
 End Function
 
 
