@@ -1,192 +1,324 @@
 Attribute VB_Name = "Math"
 Option Explicit
 'Math module by arfu
-Public Const PI As Double = 3.14159265359, e As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2, GRatio As Double = 1.61803398875
+Public Const PI As Double = 3.14159265359, E As Double = 2.71828182846, PI2 As Double = PI / 2, TAU As Double = PI * 2, GRatio As Double = 1.61803398875
 
-Public Function IsPrime(ByVal X#) As Boolean
+
+Public Function IsPrime(ByVal x#) As Boolean
     Dim c#, i%
     IsPrime = True
-    For c = 2 To X - 1
-        If isDivisible(X, c) = True Then IsPrime = False
+    For c = 2 To x - 1
+        If isDivisible(x, c) = True Then IsPrime = False
     Next
 End Function
-Public Function isDivisible(ByVal X#, Optional ByVal Y# = 2) As Boolean
-    isDivisible = X Mod Y = 0
+
+
+Public Function isDivisible(ByVal x#, Optional ByVal y# = 2) As Boolean
+    isDivisible = x Mod y = 0
 End Function
+
+
 Function Evaluate(ByVal String1 As String) As Double
     On Error Resume Next
     Dim Excel As Object: Set Excel = CreateObject("Excel.Application")
     Evaluate = Excel.Evaluate(String1)
 End Function
-Public Function Pow(ByVal X#, Optional ByVal Y# = 2) As Double
-    On Error Resume Next
-    Pow = (X ^ Y)
+
+
+Public Function Pow(ByVal x#, Optional ByVal y# = 2) As Double
+    Pow = (x ^ y)
 End Function
-Public Function Root(ByVal X#, Optional ByVal Y As Double = 2) As Double
-    On Error Resume Next
-    Root = X ^ (1 / Y)
+
+
+Public Function Root(ByVal x#, Optional ByVal y As Double = 2) As Double
+    Root = x ^ (1 / y)
 End Function
-'VBUtilis by PPTGames (modified)
-Public Function RandNum(Optional ByVal Minimum As Single, Optional ByVal Maximum As Single = 1, Optional ByVal Float As Single = 7, Optional RandomizeNumber As Variant) As Single
+
+
+Public Function RandNum(Optional ByVal Minimum As Single, Optional ByVal Maximum As Single = 1, Optional ByVal Float As Integer, Optional RandomizeNumber As Variant) As Single
     If IsMissing(RandomizeNumber) Then
         Randomize
     Else
         Randomize RandomizeNumber
     End If
-    RandNum = Round((Maximum - Minimum) * Rnd + Minimum, 7)
+    RandNum = Round((Maximum - Minimum) * Rnd + Minimum, Float)
 End Function
-Public Function Ceil(ByVal X#) As Long
-    Ceil = IIf(Round(X, 0) >= X, Round(X, 0), Round(X, 0) + 1)
+
+
+Public Function Ceil(ByVal x#) As Long
+    Ceil = IIf(Round(x, 0) >= x, Round(x, 0), Round(x, 0) + 1)
 End Function
-Public Function Trunc(ByVal X#) As Long
-    Trunc = IIf(X > 0, Int(X), Int(X * -1) * -1)
+
+
+Public Function Trunc(ByVal x#) As Long
+    Trunc = IIf(x > 0, Int(x), Int(x * -1) * -1)
 End Function
-Public Function Floor(ByVal X#) As Long
-    Floor = IIf(Round(X, 0) <= X, Round(X, 0), Round(X, 0) - 1)
+
+
+Public Function Floor(ByVal x#) As Long
+    Floor = IIf(Round(x, 0) <= x, Round(x, 0), Round(x, 0) - 1)
 End Function
-Public Function Delta(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0, Optional ByVal Root As Boolean = False) As Double
-    Delta = IIf(Root, Sgn(b ^ 2 - 4 * a * c), b ^ 2 - 4 * a * c)
+
+
+Public Function Delta(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0) As Double
+    Delta = b ^ 2 - 4 * a * c
 End Function
-Public Function Bhask(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0, Optional ByVal X As Boolean) As Double
-    Dim D As Double: D = b ^ 2 - 4 * a * c
-    If D < 0 Then Exit Function
-    Bhask = IIf(X, (-b + Root(D)) / (2 * a), (-b - Root(D)) / (2 * a))
+
+
+Public Function Bhask(ByVal a#, Optional ByVal b# = 0, Optional ByVal c# = 0)
+    If Delta(a, b, c) < 0 Then Exit Function
+    Bhask = Array((-b + Root(Delta(a, b, c))) / (2 * a), (-b - Root(Delta(a, b, c))) / (2 * a))
 End Function
-Public Function Min(ParamArray X() As Variant) As Double
+
+
+Public Function Min(ParamArray x() As Variant) As Double
     Dim i%
-    For i = LBound(X) To UBound(X)
-        If i = 0 Or X(i) < Min Then Min = X(i)
+    For i = LBound(x) To UBound(x)
+        If i = 0 Or x(i) < Min Then Min = x(i)
     Next
 End Function
-Public Function Max(ParamArray X() As Variant) As Double
+
+
+Public Function Max(ParamArray x() As Variant) As Double
     Dim i%
-    For i = LBound(X) To UBound(X)
-        If i = 0 Or X(i) > Max Then Max = X(i)
+    For i = LBound(x) To UBound(x)
+        If i = 0 Or x(i) > Max Then Max = x(i)
     Next
 End Function
-Public Function Fact(X As Long) As LongLong
+
+
+Public Function GCD(ByVal a As Long, ByVal b As Long) As Long
+    Dim remainder As Long
+    If a < 0 Then a = -a
+    If b < 0 Then b = -b
+    If a = 0 Or b = 0 Then Exit Function
+    Do
+      remainder = a Mod b
+      a = b
+      b = remainder
+    Loop Until remainder = 0
+    GCD = a
+End Function
+
+
+Public Function LCM(ByVal a As Long, ByVal b As Long) As Long
+    If a < 0 Then a = -a
+    If b < 0 Then b = -b
+    If a = 0 Or b = 0 Then Exit Function
+    
+    LCM = (a * b) \ GCD(a, b)
+End Function
+
+
+Public Function Fact(ByVal x As Long) As LongLong
     Fact = 1
-    For X = X To 1 Step -1
-        Fact = Fact * X
+    For x = x To 1 Step -1
+        Fact = Fact * x
     Next
 End Function
-Public Function SemiFact(X As Long) As LongLong
+
+
+Public Function SemiFact(ByVal x As Long) As LongLong
     SemiFact = 1
-    For X = X To 1 Step -2
-        SemiFact = SemiFact * X
+    For x = x To 1 Step -2
+        SemiFact = SemiFact * x
     Next
 End Function
-Public Function Fibonacci(Quant As Integer, Optional Sequence As Boolean = True)
-    Dim n2 As Long, n1 As Long, handler As String, i As Integer, c As Long
-    n1 = 0
-    n2 = 1
-    c = 0
-    If Quant <= 0 Then
-        Exit Function
-    ElseIf Quant = 1 Then
-        Fibonacci = 0
+
+
+Public Function Fibonacci(ByVal n As Long) As Long
+    If n <= 0 Then
+      Fibonacci = 0
+    ElseIf n = 1 Then
+      Fibonacci = 1
     Else
-        Do While i < Quant
-            handler = handler & n1 & " "
-            c = n1 + n2
-            n1 = n2
-            n2 = c
-            i = i + 1
-        Loop
-        Fibonacci = IIf(Sequence, Split(handler, " "), Split(handler, " ")(UBound(Split(handler, " ")) - 1))
+      Fibonacci = Fibonacci(n - 1) + Fibonacci(n - 2)
     End If
 End Function
-Public Function Mean(ParamArray X() As Variant) As Double
+
+
+Public Function Mean(ParamArray x() As Variant) As Double
     Dim i%
-    For i = LBound(X) To UBound(X)
-        Mean = Mean + X(i)
+    For i = LBound(x) To UBound(x)
+        Mean = Mean + x(i)
     Next
-    Mean = Mean / (UBound(X) + 1)
+    Mean = Mean / (UBound(x) + 1)
 End Function
-Public Function XMid(ByVal X1#, ByVal X2#) As Double
-    XMid = (X1 + X2) / 2
+
+
+Public Function Median(ParamArray x() As Variant) As Double
+    Median = x(0)
+    If UBound(x) = 0 Then Exit Function
+    Median = IIf(UBound(x) Mod 2, (x(UBound(x) \ 2) + x(UBound(x) \ 2 + 1)) / 2, x(UBound(x) \ 2))
 End Function
-Public Function YMid(ByVal Y1#, ByVal Y2#) As Double
-    YMid = (Y1 + Y2) / 2
+
+
+Public Function Variance(ByVal N1#, ByVal N2#) As Double
+    Variance = (Mean(N1, N2) - N1) ^ 2 + (Mean(N1, N2) - N2) ^ 2
 End Function
-Public Function Distance(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#, Optional ByVal Sqrt As Boolean = True) As Double
-    Distance = IIf(Sqrt, Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2), (X2 - X1) ^ 2 + (Y2 - Y1) ^ 2)
+
+
+Public Function XMid(ByVal x1#, ByVal x2#) As Double
+    XMid = (x1 + x2) / 2
 End Function
-Public Function Distance2(ByVal X1#, ByVal X2#, ByVal Y1#, ByVal Y2#, ByVal Z1#, ByVal Z2#, Optional ByVal Sqrt As Boolean = True) As Double
-    Distance2 = IIf(Sqrt, Root((X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2), (X2 - X1) ^ 2 + (Y2 - Y1) ^ 2 + (Z2 - Z1) ^ 2)
+
+
+Public Function YMid(ByVal y1#, ByVal y2#) As Double
+    YMid = (y1 + y2) / 2
 End Function
-Public Function Hypot(ByVal X#, ByVal Y#) As Double
-    Hypot = Root(X ^ 2 + Y ^ 2)
+
+
+Public Function FindA(ByVal x1#, ByVal x2#, ByVal y1#, ByVal y2#) As Double
+    If x1 = x2 Then Exit Function
+    FindA = (y1 - y2) / (x1 - x2)
 End Function
-Public Function LogN(ByVal X#, ByVal Y#) As Double
-    LogN = Log(X) / Log(Y)
+
+
+Public Function Lerp(ByVal x1#, ByVal x2#, ByVal y1#, ByVal y2#, ByVal x#) As Double
+    Lerp = y1 + (x - x1) * (y2 - y1) / (x2 - x1)
 End Function
-Public Function ATan2(ByVal X#, ByVal Y#) As Double
-    ATan2 = IIf(X > 0, Atn(Y / X), IIf(X < 0, Atn(Y / X) + PI * Sgn(Y) + IIf(Y = 0, PI, 0), PI2 * Sgn(Y)))
+
+
+Public Function LineLineIntersect(ByVal x1#, ByVal y1#, ByVal x2#, ByVal y2#, ByVal x3#, ByVal y3#, ByVal x4#, ByVal y4#)
+    Dim x As Double, y As Double
+    If (x1 - x2) * (y3 - y4) = (y1 - y2) * (x3 - x4) Then Exit Function
+    x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4))
+    y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4))
+    LineLineIntersect = Array(x, y)
 End Function
-Public Function Sec(ByVal X#) As Double
-    Sec = 1 / Cos(X)
+
+
+Public Function Distance(ByVal x1#, ByVal x2#, ByVal y1#, ByVal y2#, Optional ByVal Sqrt As Boolean = True) As Double
+    Distance = IIf(Sqrt, Root((x2 - x1) ^ 2 + (y2 - y1) ^ 2), (x2 - x1) ^ 2 + (y2 - y1) ^ 2)
 End Function
-Public Function Cosec(ByVal X#) As Double
-    Cosec = 1 / Sin(X)
+
+
+Public Function Distance2(ByVal x1#, ByVal x2#, ByVal y1#, ByVal y2#, ByVal Z1#, ByVal Z2#, Optional ByVal Sqrt As Boolean = True) As Double
+    Distance2 = IIf(Sqrt, Root((x2 - x1) ^ 2 + (y2 - y1) ^ 2 + (Z2 - Z1) ^ 2), (x2 - x1) ^ 2 + (y2 - y1) ^ 2 + (Z2 - Z1) ^ 2)
 End Function
-Public Function Cotan(ByVal X#) As Double
-    Cotan = 1 / Tan(X)
+
+
+Public Function Hypot(ByVal x#, ByVal y#) As Double
+    Hypot = Root(x ^ 2 + y ^ 2)
 End Function
-Public Function Radians(ByVal X#) As Double
-    Radians = X * 180 / PI
+
+
+Public Function LogN(ByVal x#, ByVal y#) As Double
+    LogN = Log(x) / Log(y)
 End Function
-Public Function Degrees(ByVal X#) As Double
-    Degrees = X * PI / 180
+
+
+Public Function ATan2(ByVal x#, ByVal y#) As Double
+    ATan2 = IIf(x > 0, Atn(y / x), IIf(x < 0, Atn(y / x) + PI * Sgn(y) + IIf(y = 0, PI, 0), PI2 * Sgn(y)))
 End Function
-Public Function ASin(ByVal X#) As Double
-    ASin = Atn(X / Root(-X * X + 1))
+
+
+Public Function Sec(ByVal x#) As Double
+    Sec = 1 / Cos(x)
 End Function
-Public Function ACos(ByVal X#) As Double
-    ACos = Atn(-X / Root(-X * X + 1)) + 2 * Atn(1)
+
+
+Public Function Cosec(ByVal x#) As Double
+    Cosec = 1 / Sin(x)
 End Function
-Public Function ASec(ByVal X#) As Double
-    ASec = Atn(X / Root(X * X - 1)) + Sgn((X) - 1) * (2 * Atn(1))
+
+
+Public Function Cotan(ByVal x#) As Double
+    Cotan = 1 / Tan(x)
 End Function
-Public Function ACosec(ByVal X#) As Double
-    ACosec = Atn(X / Root(X * X - 1)) + (Sgn(X) - 1) * (2 * Atn(1))
+
+
+Public Function Radians(ByVal x#) As Double
+    Radians = x * 180 / PI
 End Function
-Public Function ACotan(ByVal X#) As Double
-    ACotan = Atn(X) + 2 * Atn(1)
+
+
+Public Function Degrees(ByVal x#) As Double
+    Degrees = x * PI / 180
 End Function
-Public Function HSin(ByVal X#) As Double
-    HSin = (Exp(X) - Exp(-X)) / 2
+
+
+Public Function ASin(ByVal x#) As Double
+    ASin = Atn(x / Root(-x * x + 1))
 End Function
-Public Function HCos(ByVal X#) As Double
-    HCos = (Exp(X) + Exp(-X)) / 2
+
+
+Public Function ACos(ByVal x#) As Double
+    ACos = Atn(-x / Root(-x * x + 1)) + 2 * Atn(1)
 End Function
-Public Function HTan(ByVal X#) As Double
-    HTan = (Exp(X) - Exp(-X)) / (Exp(X) + Exp(-X))
+
+
+Public Function ASec(ByVal x#) As Double
+    ASec = Atn(x / Root(x * x - 1)) + Sgn((x) - 1) * (2 * Atn(1))
 End Function
-Public Function HSec(ByVal X#) As Double
-    HSec = 2 / (Exp(X) + Exp(-X))
+
+
+Public Function ACosec(ByVal x#) As Double
+    ACosec = Atn(x / Root(x * x - 1)) + (Sgn(x) - 1) * (2 * Atn(1))
 End Function
-Public Function HCosec(ByVal X#) As Double
-    HCosec = 2 / (Exp(X) - Exp(-X))
+
+
+Public Function ACotan(ByVal x#) As Double
+    ACotan = Atn(x) + 2 * Atn(1)
 End Function
-Public Function HCotan(ByVal X#) As Double
-    HCotan = (Exp(X) + Exp(-X)) / (Exp(X) - Exp(-X))
+
+
+Public Function HSin(ByVal x#) As Double
+    HSin = (Exp(x) - Exp(-x)) / 2
 End Function
-Public Function HASin(ByVal X#) As Double
-    HASin = Log(X + Root(X * X + 1))
+
+
+Public Function HCos(ByVal x#) As Double
+    HCos = (Exp(x) + Exp(-x)) / 2
 End Function
-Public Function HACos(ByVal X#) As Double
-    HACos = Log(X + Root(X * X - 1))
+
+
+Public Function HTan(ByVal x#) As Double
+    HTan = (Exp(x) - Exp(-x)) / (Exp(x) + Exp(-x))
 End Function
-Public Function HATan(ByVal X#) As Double
-    HATan = Log((1 + X) / (1 - X)) / 2
+
+
+Public Function HSec(ByVal x#) As Double
+    HSec = 2 / (Exp(x) + Exp(-x))
 End Function
-Public Function HASec(ByVal X#) As Double
-    HASec = Log((Root(-X * X + 1) + 1) / X)
+
+
+Public Function HCosec(ByVal x#) As Double
+    HCosec = 2 / (Exp(x) - Exp(-x))
 End Function
-Public Function HACosec(ByVal X#) As Double
-    HACosec = Log((Sgn(X) * Root(X * X + 1) + 1) / X)
+
+
+Public Function HCotan(ByVal x#) As Double
+    HCotan = (Exp(x) + Exp(-x)) / (Exp(x) - Exp(-x))
 End Function
-Public Function HACotan(ByVal X#) As Double
-    HACotan = Log((X + 1) / (X - 1)) / 2
+
+
+Public Function HASin(ByVal x#) As Double
+    HASin = Log(x + Root(x * x + 1))
 End Function
+
+
+Public Function HACos(ByVal x#) As Double
+    HACos = Log(x + Root(x * x - 1))
+End Function
+
+
+Public Function HATan(ByVal x#) As Double
+    HATan = Log((1 + x) / (1 - x)) / 2
+End Function
+
+
+Public Function HASec(ByVal x#) As Double
+    HASec = Log((Root(-x * x + 1) + 1) / x)
+End Function
+
+
+Public Function HACosec(ByVal x#) As Double
+    HACosec = Log((Sgn(x) * Root(x * x + 1) + 1) / x)
+End Function
+
+
+Public Function HACotan(ByVal x#) As Double
+    HACotan = Log((x + 1) / (x - 1)) / 2
+End Function
+
