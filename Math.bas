@@ -31,7 +31,8 @@ End Function
 
 
 Public Function Root(ByVal x#, Optional ByVal y As Double = 2) As Double
-    Root = x ^ (1 / y)
+    If y = 0 Then Exit Function
+    Root = Abs(x) ^ (1 / y)
 End Function
 
 
@@ -89,12 +90,10 @@ End Function
 
 Public Function GCD(ByVal a As Long, ByVal b As Long) As Long
     Dim remainder As Long
-    a = Abs(a)
-    b = Abs(b)
     If a = 0 Or b = 0 Then Exit Function
     Do
-      remainder = a Mod b
-      a = b
+      remainder = Abs(a) Mod Abs(b)
+      a = Abs(b)
       b = remainder
     Loop Until remainder = 0
     GCD = a
@@ -102,11 +101,8 @@ End Function
 
 
 Public Function LCM(ByVal a As Long, ByVal b As Long) As Long
-    a = Abs(a)
-    b = Abs(b)
     If a = 0 Or b = 0 Then Exit Function
-    
-    LCM = (a * b) \ GCD(a, b)
+    LCM = (Abs(a) * Abs(b)) \ GCD(a, b)
 End Function
 
 
@@ -162,6 +158,7 @@ End Function
 
 
 Public Function Lerp(ByVal x1#, ByVal x2#, ByVal y1#, ByVal y2#, ByVal x#) As Double
+    If x1 = x2 Then Exit Function
     Lerp = y1 + (x - x1) * (y2 - y1) / (x2 - x1)
 End Function
 
@@ -195,8 +192,8 @@ Public Function LogN(ByVal x#, ByVal y#) As Double
 End Function
 
 
-Public Function ATan2(ByVal x#, ByVal y#) As Double
-    ATan2 = IIf(x > 0, Atn(y / x), IIf(x < 0, Atn(y / x) + PI * Sgn(y) + IIf(y = 0, PI, 0), PI2 * Sgn(y)))
+Public Function Atn2(ByVal x#, ByVal y#) As Double
+    Atn2 = IIf(x > 0, Atn(y / x), IIf(x < 0, Atn(y / x) + PI * Sgn(y) + IIf(y = 0, PI, 0), PI2 * Sgn(y)))
 End Function
 
 
