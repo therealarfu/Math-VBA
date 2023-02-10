@@ -1,6 +1,15 @@
 Attribute VB_Name = "Math"
-Option Explicit
 'Math module by arfu
+Option Explicit
+#If Win64 Then
+    #If VBA7 Then
+        Public Const MAX_INTEGER As LongLong = 2 ^ 63 - 1
+    #Else
+        Public Const MAX_INTEGER As Long = 2 ^ 63 - 1
+    #End If
+#Else
+    Public Const MAX_INTEGER As Long = 2 ^ 31 - 1
+#End If
 Public Const PI As Double = 3.14159265359, E As Double = 2.71828182846, PI2 As Double = 1.57079632679, TAU As Double = 6.28318530718, GRatio As Double = 1.61803398875
 
 Public Function IsPrime(ByVal X As Long) As Boolean
@@ -32,18 +41,7 @@ Public Function Evaluate(ByVal String1 As String) As Double
     Evaluate = Excel.Evaluate(String1)
 End Function
 
-
-#If VBA7 Then
-    Public Function GetMaxSize() As LongLong
-        #If Win64 Then
-            GetMaxSize = 2 ^ 63 - 1
-        #Else
-            GetMaxSize = 2 ^ 31 - 1
-        #End If
-    End Function
-#End If
-
-
+    
 Public Function Pow(ByVal X#, Optional ByVal y# = 2) As Double
     Pow = (X ^ y)
 End Function
