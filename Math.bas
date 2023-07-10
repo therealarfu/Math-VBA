@@ -157,8 +157,8 @@ Public Function Variance(ByVal N1#, ByVal N2#) As Double
 End Function
 
 
-Public Function XMid(ByVal X1#, ByVal X2#) As Double
-    XMid = (X1 + X2) / 2
+Public Function Mid(ByVal X1#, ByVal X2#) As Double
+    Mid = (X1 + X2) / 2
 End Function
 
 
